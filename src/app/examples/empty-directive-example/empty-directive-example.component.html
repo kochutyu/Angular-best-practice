@@ -1,0 +1,19 @@
+<!-- DEBUG -->
+<ng-container *ngFor="let item of testData">
+  <app-debuger [data]="item"></app-debuger>
+</ng-container>
+
+<hr>
+
+<ng-container *ngFor="let item of testData">
+  <ng-container [empty]="item.value"></ng-container>
+  <br>
+</ng-container>
+
+<hr>
+
+<ng-container *ngFor="let item of testData">
+  <ng-container [empty]="item.value" [emptyValue]="'-------'"></ng-container>
+  <br>
+</ng-container>
+

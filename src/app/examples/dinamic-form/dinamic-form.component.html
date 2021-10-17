@@ -1,0 +1,83 @@
+<ng-container>
+  <app-debuger *ngFor="let control of usersFormArray.controls" [data]="control.value.formGroup.value"></app-debuger>
+  <button (click)="addNewUser()">Add new user</button>
+  <table border="1">
+    <caption>Users</caption>
+    <tr>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Age</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let control of usersFormArray.controls; let idx = index">
+      <ng-container [ngSwitch]="control.value.state">
+        <ng-container *ngSwitchCase="'add'">
+          <ng-template [ngTemplateOutlet]="addUserDinamicFormTemplate" [ngTemplateOutletContext]="{
+            idx: idx,
+            formGroup: control.value.formGroup
+          }"></ng-template>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'edit'">
+          <ng-template [ngTemplateOutlet]="editUserDinamicFormTemplate" [ngTemplateOutletContext]="{
+            idx: idx,
+            formGroup: control.value.formGroup
+          }"></ng-template>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          <ng-template [ngTemplateOutlet]="viewUserDinamicFormTemplate" [ngTemplateOutletContext]="{
+            idx: idx,
+            formGroup: control.value.formGroup
+          }"></ng-template>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </table>
+</ng-container>
+
+<!-- ADD TEMPLATE -->
+<ng-template #addUserDinamicFormTemplate let-idx="idx" let-formGroup="formGroup">
+  <ng-container [formGroup]="formGroup">
+    <td><input type="text" formControlName="name"></td>
+    <td><input type="text" formControlName="surname"></td>
+    <td><input type="number" formControlName="age"></td>
+    <td>
+      <button (click)="addUser(idx, formGroup)">Add</button>
+      <button (click)="removeUser(idx)">Remove</button>
+    </td>
+  </ng-container>
+</ng-template>
+
+<!-- EDIT TEMPLATE -->
+<ng-template #editUserDinamicFormTemplate let-idx=idx let-formGroup="formGroup">
+  <ng-container [formGroup]="formGroup">
+    <td>
+      {{formGroup.value.name}}
+    </td>
+    <td>
+      {{formGroup.value.surname}}
+    </td>
+    <td><input type="number" formControlName="age"></td>
+    <td>
+      <button (click)="saveUser(idx, formGroup)">Save</button>
+    </td>
+  </ng-container>
+</ng-template>
+
+<!-- VIEW TEMPLATE -->
+<ng-template #viewUserDinamicFormTemplate let-idx="idx" let-formGroup="formGroup">
+  <ng-container [formGroup]="formGroup">
+    <td>
+      {{formGroup.value.name}}
+    </td>
+    <td>
+      {{formGroup.value.surname}}
+    </td>
+    <td>{{formGroup.value.age}}</td>
+    <td>
+      <button (click)="editUser(idx, formGroup)">Edit</button>
+      <button (click)="deleteUser(idx)">Delete</button>
+    </td>
+  </ng-container>
+</ng-template>

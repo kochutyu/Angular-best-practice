@@ -1,0 +1,14 @@
+<app-debuger [data]="authService.getUser$() | async"></app-debuger>
+
+<button class="r-10" (click)="setRole('admin')">Set admin role</button>
+<button class="r-10" (click)="setRole('manager')">Set manager role</button>
+<button (click)="setRole('user')">Set user role</button>
+
+<h1 *forRoles="isAllRole; else otherTitleRolesTemplate">Is All</h1> <br>
+<h1 *forRoles="isAdminRole; else otherTitleRolesTemplate">Is Admin</h1> <br>
+<h1 *forRoles="isManagerRole; else otherTitleRolesTemplate">Is Manager</h1> <br>
+<h1 *forRoles="isUserRole; else otherTitleRolesTemplate">Is User</h1> <br>
+
+<ng-template #otherTitleRolesTemplate>
+  No permission!
+</ng-template>

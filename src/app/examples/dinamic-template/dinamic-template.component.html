@@ -1,0 +1,39 @@
+<ng-container>
+  <h3>Add</h3>
+  <app-debuger *ngFor="let formGroup of addUserFormArray.controls" [data]="formGroup.value"></app-debuger>
+  <ng-container *ngFor="let formGroup of addUserFormArray.controls; let idx = index">
+    <ng-container [ngTemplateOutlet]="addUserTemplate" [ngTemplateOutletContext]="{
+      formGroup: formGroup,
+      idx: idx
+    }"></ng-container>
+    <hr>
+  </ng-container>
+
+  <app-divider></app-divider>
+
+  <h3>Edit</h3>
+  <app-debuger *ngFor="let formGroup of editUserFormArray.controls" [data]="formGroup.value"></app-debuger>
+  <ng-container *ngFor="let formGroup of editUserFormArray.controls; let idx = index">
+    <ng-container [ngTemplateOutlet]="editUserTemplate" [ngTemplateOutletContext]="{
+      formGroup: formGroup,
+      idx: idx
+    }"></ng-container>
+    <hr>
+  </ng-container>
+</ng-container>
+
+<!-- ADD TEMPLATE -->
+<ng-template #addUserTemplate let-idx="idx" let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <input type="text" formControlName="name"> <br>
+    <input type="text" formControlName="surname"> <br>
+    <input type="number" formControlName="age"> <br>
+  </form>
+</ng-template>
+
+<!-- EDIT TEMPLATE -->
+<ng-template #editUserTemplate let-idx="idx" let-formGroup="formGroup">
+  <form [formGroup]="formGroup" autocompleteOff>
+    <input type="number" formControlName="age"> <br>
+  </form>
+</ng-template>
